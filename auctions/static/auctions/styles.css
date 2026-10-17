@@ -1,0 +1,57 @@
+
+body {
+    font-family: 'Inter', sans-serif;
+    padding: 10px;
+    
+}
+
+.listing-card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.listing-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    background-color: #f8f9fada;
+    display: block;
+}
+
+.listing-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.listing-description {
+    color: #555;
+}
+
+.starting-bid {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.error-list {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    padding: 12px;
+    margin-bottom: 15px;
+}
+.comment {
+    margin-bottom: 15px;
+}
+
+.comment strong {
+    display: block;
+}
+
+.comment p {
+    margin-left:5px;
+}

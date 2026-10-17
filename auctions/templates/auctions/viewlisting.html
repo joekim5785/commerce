@@ -1,0 +1,149 @@
+{% extends "auctions/layout.html" %} {% block body %} {% if message %}
+<div class="container mt-4">
+  <div class="alert alert-danger" role="alert">{{ message }}</div>
+</div>
+{% endif %}
+
+<div class="container mt-5">
+  {% if not listing.is_active %}
+
+  <p>Auction closed.</p>
+
+  {% if winning_bid.bidder == user %}
+  <div class="alert alert-success" role="alert">
+    <h4 class="alert-heading">Congratulations!</h4>
+    <p class="mb-0">You won this auction.</p>
+  </div>
+  {% endif %} {% endif %}
+
+  <div class="card shadow-sm border-0 listing-card">
+    <div class="row g-0">
+      <!-- Listing Image -->
+      <div class="col-md-5">
+        {% if listing.image %}
+        <img
+          src="{{ listing.image }}"
+          class="img-fluid h-100 w-100 listing-image"
+          alt="{{ listing.title }}"
+        />
+        {% endif %}
+      </div>
+
+      <!-- Listing Details -->
+      <div class="col-md-7">
+        <div class="card-body p-4">
+          <!-- Title -->
+          <h1 class="listing-title mb-3">{{ listing.title }}</h1>
+
+          <!-- Description -->
+          <p class="text-muted mb-4">{{ listing.description }}</p>
+
+          <!-- Listing Information -->
+          <div class="mb-4">
+            <p class="mb-2">
+              <strong>Category:</strong>
+              {{ listing.category }}
+            </p>
+
+            <p class="mb-0">
+              <strong>Starting bid:</strong>
+              <span class="starting-bid"> ${{ listing.starting_bid }} </span>
+            </p>
+          </div>
+
+          {% if user.is_authenticated and listing.is_active %}
+
+          <!-- Bid Section -->
+          {% if user != owner %}
+          <div class="border-top pt-4">
+            <h5 class="mb-3">Place a bid</h5>
+
+            <form
+              action="{% url 'bid' id=listing.id %}"
+              method="post"
+              class="mb-3"
+            >
+              {% csrf_token %} {{ bid_form }}
+
+              <button class="btn btn-primary mt-2" type="submit">
+                Place Bid
+              </button>
+            </form>
+          </div>
+          {% endif %}
+
+          <!-- Watchlist -->
+
+          {% if watchlist_exists %}
+          <div class="mb-4">
+            <a
+              href="{% url 'RemoveFromWatchlist' id=listing.id %}"
+              class="btn btn-outline-secondary"
+            >
+              Remove From Watchlist
+            </a>
+          </div>
+
+          {% else %}
+          <div class="mb-4">
+            <a
+              href="{% url 'AddToWatchlist' id=listing.id %}"
+              class="btn btn-outline-secondary"
+            >
+              Add to Watchlist
+            </a>
+          </div>
+
+          {% endif %}
+
+          <!-- Comments -->
+          <div class="border-top pt-4">
+            <form
+              action="{% url 'comment' id=listing.id %}"
+              method="post"
+              class="mb-3"
+            >
+              {% csrf_token %} {{ comment_form }}
+
+              <button class="btn btn-primary mt-2" type="submit">
+                Add Comment
+              </button>
+            </form>
+
+            {% for comment in comments %}
+            <div class="comment">
+              <strong>{{ comment.user.username }}:</strong>
+              <p>{{ comment.comment }}</p>
+            </div>
+
+            {% empty %}
+
+            <p>No comments available for this listing.</p>
+
+            {% endfor %}
+          </div>
+
+          <!-- Owner Controls -->
+          {% if owner == user %}
+
+          <div class="border-top pt-4">
+            <form
+              action="{% url 'close_auction' id=listing.id %}"
+              method="post"
+            >
+              {% csrf_token %}
+
+              <button class="btn btn-danger" type="submit">
+                Close Auction
+              </button>
+            </form>
+          </div>
+
+          {% endif %} {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
