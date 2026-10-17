@@ -91,11 +91,10 @@ commerce/
 ### 1. Clone the repository
 
 ```bash
-git clone YOUR_REPOSITORY_URL
+git clone https://github.com/joekim5785/commerce.git
 cd commerce
 ```
 
-Replace `YOUR_REPOSITORY_URL` with the repository's actual URL. Change into the directory containing `manage.py` if the cloned directory has a different name.
 
 ### 2. Create a virtual environment
 
