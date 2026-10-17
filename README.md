@@ -151,4 +151,5 @@ Potential enhancements include:
 
 ## Licence
 
-This project is available for personal and educational use. Add a formal licence if you intend to specify permissions for reuse or distribution.
+This project is available for personal and educational use.
+
